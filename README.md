@@ -1,2 +1,2 @@
-# VYLO
+# vylo
 VYLO – Discover. Compare. Choose.
