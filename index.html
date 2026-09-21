@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VYLO — Discover. Compare. Choose.</title>
+
+  <meta
+    name="description"
+    content="VYLO helps you discover, compare and choose products worth buying."
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream: #fffaf5;
+      --white: #ffffff;
+      --dark: #20202a;
+      --muted: #777581;
+      --lavender: #c9b8e8;
+      --lavender-light: #eee8f8;
+      --blush: #f4d7dc;
+      --peach: #f5d6bd;
+      --border: #ece7e2;
+      --shadow: 0 12px 35px rgba(45, 37, 56, 0.08);
+      --radius: 22px;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Background decoration */
+
+    .decor {
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.45;
+    }
+
+    .decor.one {
+      width: 260px;
+      height: 260px;
+      border: 1px solid var(--lavender);
+      border-radius: 50%;
+      top: 80px;
+      left: -140px;
+    }
+
+    .decor.two {
+      width: 340px;
+      height: 340px;
+      border: 1px solid var(--peach);
+      border-radius: 50%;
+      right: -190px;
+      top: 420px;
+    }
+
+    .decor.three {
+      width: 200px;
+      height: 200px;
+      border: 1px solid var(--blush);
+      border-radius: 50%;
+      left: 30%;
+      top: 900px;
+    }
+
+    /* Header */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 250, 245, 0.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(236, 231, 226, 0.8);
+    }
+
+    .nav {
+      max-width: 1250px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 31px;
+      font-weight: 800;
+      letter-spacing: 5px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .logo .v {
+      background: linear-gradient(135deg, #7162c7, #d68caf, #e7a26f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      font-size: 14px;
+      color: #44414b;
+    }
+
+    .nav-links a:hover {
+      color: #8068b7;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      transition: 0.2s;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Hero */
+
+    .hero {
+      max-width: 1250px;
+      margin: auto;
+      padding: 95px 24px 70px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      color: #887b98;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(45px, 6vw, 78px);
+      font-weight: 500;
+      line-height: 1.02;
+      max-width: 700px;
+    }
+
+    .hero h1 span {
+      font-style: italic;
+      background: linear-gradient(90deg, #7666c4, #ca8fae, #d99c73);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      margin: 25px 0;
+      color: var(--muted);
+      max-width: 560px;
+      font-size: 17px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      padding: 14px 22px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    .btn-primary {
+      background: var(--dark);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      background: white;
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--lavender);
+    }
+
+    .hero-art {
+      min-height: 410px;
+      border-radius: 40px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(201,184,232,.5), transparent 35%),
+        radial-gradient(circle at 70% 70%, rgba(244,215,220,.55), transparent 35%),
+        #fff;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-art::before {
+      content: "";
+      position: absolute;
+      width: 270px;
+      height: 270px;
+      border: 1px solid #d7c9eb;
+      border-radius: 50%;
+    }
+
+    .hero-art::after {
+      content: "✦";
+      position: absolute;
+      font-size: 28px;
+      color: #bca9dc;
+      top: 55px;
+      right: 70px;
+    }
+
+    .hero-logo {
+      font-size: 76px;
+      font-weight: 800;
+      letter-spacing: 13px;
+      z-index: 2;
+    }
+
+    /* Sections */
+
+    section {
+      max-width: 1250px;
+      margin: auto;
+      padding: 65px 24px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 28px;
+      gap: 20px;
+    }
+
+    .section-heading h2 {
+      font-family: Georgia, serif;
+      font-size: 37px;
+      font-weight: 500;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Search */
+
+    .search-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 18px 22px 18px 52px;
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      background: white;
+      outline: none;
+      font-size: 15px;
+      box-shadow: 0 5px 20px rgba(40,30,50,.04);
+    }
+
+    .search-box:focus {
+      border-color: var(--lavender);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 16px;
+      font-size: 19px;
+    }
+
+    /* Categories */
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+
+    .category {
+      padding: 25px 12px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      text-align: center;
+      transition: 0.25s;
+    }
+
+    .category:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--lavender);
+    }
+
+    .category-icon {
+      font-size: 27px;
+      margin-bottom: 9px;
+    }
+
+    .category span {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* Products */
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      transition: 0.25s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .product-image {
+      height: 230px;
+      background: linear-gradient(145deg, #f0eaf7, #f9eeee);
+      display: grid;
+      place-items: center;
+      font-size: 75px;
+      position: relative;
+    }
+
+    .heart {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,.9);
+      font-size: 17px;
+    }
+
+    .heart.active {
+      color: #c86684;
+    }
+
+    .product-info {
+      padding: 18px;
+    }
+
+    .retailer {
+      color: #8b8390;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+    }
+
+    .product h3 {
+      font-size: 15px;
+      margin: 6px 0;
+    }
+
+    .rating {
+      font-size: 12px;
+      color: #a37b39;
+      margin-bottom: 9px;
+    }
+
+    .price-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .price {
+      font-weight: 700;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .small-btn {
+      flex: 1;
+      padding: 9px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .small-btn.primary {
+      background: var(--dark);
+      color: white;
+      border-color: var(--dark);
+    }
+
+    /* Find your match */
+
+    .match {
+      background:
+        linear-gradient(135deg, rgba(238,232,248,.8), rgba(255,245,240,.85));
+      border-radius: 35px;
+      padding: 55px;
+      text-align: center;
+      border: 1px solid #e7dfec;
+    }
+
+    .match h2 {
+      font-family: Georgia, serif;
+      font-size: 42px;
+      font-weight: 500;
+    }
+
+    .match p {
+      color: var(--muted);
+      max-width: 600px;
+      margin: 12px auto 25px;
+    }
+
+    /* Modal */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(25,20,30,.5);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      width: min(600px, 100%);
+      background: white;
+      border-radius: 28px;
+      padding: 30px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .close {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      border: none;
+      background: #f5f3f2;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .step h3 {
+      font-family: Georgia, serif;
+      font-size: 30px;
+      font-weight: 500;
+      margin-bottom: 22px;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .option {
+      padding: 17px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 15px;
+      text-align: left;
+    }
+
+    .option:hover,
+    .option.selected {
+      border-color: #a994d0;
+      background: #f7f3fb;
+    }
+
+    .step-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+    }
+
+    /* Footer */
+
+    footer {
+      background: #24232b;
+      color: white;
+      padding: 55px 24px;
+      margin-top: 50px;
+    }
+
+    .footer-inner {
+      max-width: 1250px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.4fr repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    footer .logo {
+      margin-bottom: 15px;
+    }
+
+    footer p,
+    footer a {
+      color: #b9b7c0;
+      font-size: 13px;
+    }
+
+    footer h4 {
+      margin-bottom: 15px;
+    }
+
+    footer a {
+      display: block;
+      margin: 8px 0;
+    }
+
+    .copyright {
+      max-width: 1250px;
+      margin: 35px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid #3c3a44;
+      color: #96939d;
+      font-size: 12px;
+    }
+
+    /* Toast */
+
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translate(-50%, 100px);
+      background: #24232b;
+      color: white;
+      padding: 13px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      transition: .3s;
+      z-index: 800;
+    }
+
+    .toast.show {
+      transform: translate(-50%, 0);
+    }
+
+    /* Responsive */
+
+    @media(max-width: 1000px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .categories {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-inner {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width: 600px) {
+      .nav {
+        padding: 14px 16px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .hero {
+        padding: 60px 18px 40px;
+      }
+
+      section {
+        padding: 45px 18px;
+      }
+
+      .hero-art {
+        min-height: 280px;
+      }
+
+      .hero-logo {
+        font-size: 48px;
+      }
+
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .products {
+        grid-template-columns: 1fr;
+      }
+
+      .match {
+        padding: 35px 20px;
+      }
+
+      .match h2 {
+        font-size: 32px;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="decor one"></div>
+  <div class="decor two"></div>
+  <div class="decor three"></div>
+
+  <!-- HEADER -->
+
+  <header>
+    <nav class="nav">
+
+      <a href="#" class="logo">
+        <span class="v">V</span>YLO
+      </a>
+
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#discover">Discover</a>
+        <a href="#categories">Categories</a>
+        <a href="#trending">Trending</a>
+        <a href="#deals">Deals</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="icon-btn" onclick="focusSearch()">⌕</button>
+        <button class="icon-btn" onclick="showWishlist()">♡</button>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- HERO -->
+
+  <main id="home">
+
+    <div class="hero">
+
+      <div>
+        <div class="eyebrow">A smarter way to shop</div>
+
+        <h1>
+          Discover what
+          <span>fits your world.</span>
+        </h1>
+
+        <p>
+          VYLO helps you discover interesting products,
+          compare your options and choose what feels right
+          for you.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#discover" class="btn btn-primary">
+            Explore Products
+          </a>
+
+          <button class="btn btn-secondary" onclick="openMatch()">
+            Find Your Match
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="hero-logo">
+          <span class="v">V</span>YLO
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <section>
+
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+
+        <input
+          id="searchInput"
+          class="search-box"
+          type="text"
+          placeholder="Search products, styles or categories..."
+          oninput="searchProducts()"
+        >
+      </div>
+
+    </section>
+
+
+    <!-- CATEGORIES -->
+
+    <section id="categories">
+
+      <div class="section-heading">
+        <div>
+          <p>EXPLORE</p>
+          <h2>Shop by category</h2>
+        </div>
+      </div>
+
+      <div class="categories">
+
+        <div class="category" onclick="filterCategory('Fashion')">
+          <div class="category-icon">👗</div>
+          <span>Fashion</span>
+        </div>
+
+        <div class="category" onclick="filterCategory('Beauty')">
+          <div class="category-icon">✨</div>
+          <span>Beauty</span>
+        </div>
+
+        <div class="category" onclick="filterCategory('Electronics')">
+          <div class="category-icon">🎧</div>
+          <span>Electronics</span>
+        </div>
+
+        <div class="category" onclick="filterCategory('Home')">
+          <div class="category-icon">🏠</div>
+          <span>Home & Living</span>
+        </div>
+
+        <div class="category" onclick="filterCategory('Footwear')">
+          <div class="category-icon">👟</div>
+          <span>Footwear</span>
+        </div>
+
+        <div class="category" onclick="filterCategory('Accessories')">
+          <div class="category-icon">👜</div>
+          <span>Accessories</span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRENDING -->
+
+    <section id="trending">
+
+      <div class="section-heading">
+        <div>
+          <p>CURATED FOR YOU</p>
+          <h2>Trending now</h2>
+        </div>
+
+        <button class="btn btn-secondary" onclick="clearFilter()">
+          View all
+        </button>
+      </div>
+
+      <div class="products" id="productGrid"></div>
+
+    </section>
+
+
+    <!-- FIND YOUR MATCH -->
+
+    <section>
+
+      <div class="match">
+
+        <div class="eyebrow">VYLO MATCH</div>
+
+        <h2>Find your match.</h2>
+
+        <p>
+          Tell VYLO what you're looking for and discover
+          products that fit your style, budget and priorities.
+        </p>
+
+        <button class="btn btn-primary" onclick="openMatch()">
+          Start Finding
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- DEALS -->
+
+    <section id="deals">
+
+      <div class="section-heading">
+
+        <div>
+          <p>VALUE PICKS</p>
+          <h2>Worth a look</h2>
+        </div>
+
+      </div>
+
+      <div class="products">
+
+        <div class="product">
+          <div class="product-image">👜</div>
+          <div class="product-info">
+            <div class="retailer">Myntra</div>
+            <h3>Minimal Everyday Tote</h3>
+            <div class="rating">★★★★☆ 4.4</div>
+            <div class="price-row">
+              <span class="price">₹799</span>
+              <span class="old-price">₹1,499</span>
+            </div>
+            <div class="product-actions">
+              <button class="small-btn" onclick="addCompare('Minimal Everyday Tote')">
+                Compare
+              </button>
+              <button class="small-btn primary" onclick="visitRetailer('Myntra')">
+                View
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="product">
+          <div class="product-image">⌚</div>
+          <div class="product-info">
+            <div class="retailer">Amazon</div>
+            <h3>Smart Everyday Watch</h3>
+            <div class="rating">★★★★☆ 4.3</div>
+            <div class="price-row">
+              <span class="price">₹1,999</span>
+              <span class="old-price">₹3,499</span>
+            </div>
+            <div class="product-actions">
+              <button class="small-btn" onclick="addCompare('Smart Everyday Watch')">
+                Compare
+              </button>
+              <button class="small-btn primary" onclick="visitRetailer('Amazon')">
+                View
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="product">
+          <div class="product-image">🪞</div>
+          <div class="product-info">
+            <div class="retailer">Flipkart</div>
+            <h3>Minimal Vanity Mirror</h3>
+            <div class="rating">★★★★★ 4.6</div>
+            <div class="price-row">
+              <span class="price">₹699</span>
+              <span class="old-price">₹1,199</span>
+            </div>
+            <div class="product-actions">
+              <button class="small-btn" onclick="addCompare('Minimal Vanity Mirror')">
+                Compare
+              </button>
+              <button class="small-btn primary" onclick="visitRetailer('Flipkart')">
+                View
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="product">
+          <div class="product-image">👚</div>
+          <div class="product-info">
+            <div class="retailer">AJIO</div>
+            <h3>Relaxed Everyday Shirt</h3>
+            <div class="rating">★★★★☆ 4.2</div>
+            <div class="price-row">
+              <span class="price">₹899</span>
+              <span class="old-price">₹1,799</span>
+            </div>
+            <div class="product-actions">
+              <button class="small-btn" onclick="addCompare('Relaxed Everyday Shirt')">
+                Compare
+              </button>
+              <button class="small-btn primary" onclick="visitRetailer('AJIO')">
+                View
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- MATCH MODAL -->
+
+  <div class="modal" id="matchModal">
+
+    <div class="modal-content">
+
+      <button class="close" onclick="closeMatch()">×</button>
+
+      <div class="step active" data-step="1">
+        <div class="eyebrow">STEP 1 OF 5</div>
+        <h3>What are you shopping for?</h3>
+
+        <div class="options">
+          <button class="option" onclick="selectOption(this)">Fashion</button>
+          <button class="option" onclick="selectOption(this)">Beauty</button>
+          <button class="option" onclick="selectOption(this)">Electronics</button>
+          <button class="option" onclick="selectOption(this)">Home</button>
+        </div>
+      </div>
+
+
+      <div class="step" data-step="2">
+        <div class="eyebrow">STEP 2 OF 5</div>
+        <h3>What's your style?</h3>
+
+        <div class="options">
+          <button class="option" onclick="selectOption(this)">Minimal</button>
+          <button class="option" onclick="selectOption(this)">Trendy</button>
+          <button class="option" onclick="selectOption(this)">Classic</button>
+          <button class="option" onclick="selectOption(this)">Casual</button>
+        </div>
+      </div>
+
+
+      <div class="step" data-step="3">
+        <div class="eyebrow">STEP 3 OF 5</div>
+        <h3>What's your budget?</h3>
+
+        <div class="options">
+          <button class="option" onclick="selectOption(this)">Under ₹500</button>
+          <button class="option" onclick="selectOption(this)">₹500 – ₹1,000</button>
+          <button class="option" onclick="selectOption(this)">₹1,000 – ₹2,500</button>
+          <button class="option" onclick="selectOption(this)">₹2,500+</button>
+        </div>
+      </div>
+
+
+      <div class="step" data-step="4">
+        <div class="eyebrow">STEP 4 OF 5</div>
+        <h3>What matters most?</h3>
+
+        <div class="options">
+          <button class="option" onclick="selectOption(this)">Price</button>
+          <button class="option" onclick="selectOption(this)">Quality</button>
+          <button class="option" onclick="selectOption(this)">Style</button>
+          <button class="option" onclick="selectOption(this)">Reviews</button>
+        </div>
+      </div>
+
+
+      <div class="step" data-step="5">
+        <div class="eyebrow">STEP 5 OF 5</div>
+        <h3>Your VYLO match is ready.</h3>
+
+        <p style="color:#777581;margin-bottom:20px;">
+          Based on your choices, VYLO will recommend products
+          that fit your preferences.
+        </p>
+
+        <button class="btn btn-primary" onclick="showToast('Your recommendations are coming soon ✨')">
+          Show My Matches
+        </button>
+      </div>
+
+
+      <div class="step-controls">
+
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="previousStep()"
+          style="display:none;"
+        >
+          Back
+        </button>
+
+        <button
+          id="nextBtn"
+          class="btn btn-primary"
+          onclick="nextStep()"
+        >
+          Continue
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-inner">
+
+      <div>
+        <div class="logo">
+          <span class="v">V</span>YLO
+        </div>
+
+        <p>
+          Discover. Compare. Choose.
+        </p>
+      </div>
+
+      <div>
+        <h4>Discover</h4>
+        <a href="#trending">Trending</a>
+        <a href="#deals">Deals</a>
+        <a href="#categories">Categories</a>
+      </div>
+
+      <div>
+        <h4>VYLO</h4>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+      </div>
+
+      <div>
+        <h4>Retailers</h4>
+        <a href="#">Amazon</a>
+        <a href="#">Flipkart</a>
+        <a href="#">Myntra</a>
+        <a href="#">AJIO</a>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 VYLO. Product discovery made simpler.
+    </div>
+
+  </footer>
+
+
+  <div class="toast" id="toast"></div>
+
+
+  <script>
+
+    const products = [
+
+      {
+        name: "Everyday Cotton Kurti",
+        retailer: "Amazon",
+        category: "Fashion",
+        price: 899,
+        oldPrice: 1499,
+        rating: "★★★★☆ 4.4",
+        emoji: "👗"
+      },
+
+      {
+        name: "Minimal Crossbody Bag",
+        retailer: "Myntra",
+        category: "Accessories",
+        price: 799,
+        oldPrice: 1399,
+        rating: "★★★★★ 4.6",
+        emoji: "👜"
+      },
+
+      {
+        name: "Wireless Earbuds",
+        retailer: "Flipkart",
+        category: "Electronics",
+        price: 1299,
+        oldPrice: 1999,
+        rating: "★★★★☆ 4.3",
+        emoji: "🎧"
+      },
+
+      {
+        name: "Everyday Running Shoes",
+        retailer: "AJIO",
+        category: "Footwear",
+        price: 1499,
+        oldPrice: 2499,
+        rating: "★★★★☆ 4.4",
+        emoji: "👟"
+      },
+
+      {
+        name: "Hydrating Face Serum",
+        retailer: "Meesho",
+        category: "Beauty",
+        price: 599,
+        oldPrice: 899,
+        rating: "★★★★☆ 4.2",
+        emoji: "✨"
+      },
+
+      {
+        name: "Minimal Desk Lamp",
+        retailer: "Amazon",
+        category: "Home",
+        price: 699,
+        oldPrice: 1199,
+        rating: "★★★★★ 4.5",
+        emoji: "💡"
+      },
+
+      {
+        name: "Classic Sling Bag",
+        retailer: "Myntra",
+        category: "Accessories",
+        price: 999,
+        oldPrice: 1699,
+        rating: "★★★★☆ 4.3",
+        emoji: "👛"
+      },
+
+      {
+        name: "Smart Fitness Band",
+        retailer: "Flipkart",
+        category: "Electronics",
+        price: 1599,
+        oldPrice: 2499,
+        rating: "★★★★☆ 4.4",
+        emoji: "⌚"
+      }
+
+    ];
+
+
+    let wishlist = [];
+    let comparison = [];
+    let currentStep = 1;
+
+
+    function renderProducts(list = products) {
+
+      const grid = document.getElementById("productGrid");
+
+      if (!list.length) {
+        grid.innerHTML =
+          "<p style='grid-column:1/-1;text-align:center;color:#777;'>No products found.</p>";
+        return;
+      }
+
+      grid.innerHTML = list.map((product, index) => `
+
+        <div class="product">
+
+          <div class="product-image">
+
+            ${product.emoji}
+
+            <button
+              class="heart ${wishlist.includes(product.name) ? "active" : ""}"
+              onclick="toggleWishlist('${product.name}')"
+            >
+              ${wishlist.includes(product.name) ? "♥" : "♡"}
+            </button>
+
+          </div>
+
+          <div class="product-info">
+
+            <div class="retailer">
+              ${product.retailer}
+            </div>
+
+            <h3>${product.name}</h3>
+
+            <div class="rating">
+              ${product.rating}
+            </div>
+
+            <div class="price-row">
+              <span class="price">₹${product.price.toLocaleString("en-IN")}</span>
+              <span class="old-price">₹${product.oldPrice.toLocaleString("en-IN")}</span>
+            </div>
+
+            <div class="product-actions">
+
+              <button
+                class="small-btn"
+                onclick="addCompare('${product.name}')"
+              >
+                Compare
+              </button>
+
+              <button
+                class="small-btn primary"
+                onclick="visitRetailer('${product.retailer}')"
+              >
+                View
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `).join("");
+
+    }
+
+
+    function searchProducts() {
+
+      const query =
+        document.getElementById("searchInput").value.toLowerCase();
+
+      const results = products.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        product.retailer.toLowerCase().includes(query)
+      );
+
+      renderProducts(results);
+
+    }
+
+
+    function filterCategory(category) {
+
+      const results =
+        products.filter(product => product.category === category);
+
+      document.getElementById("trending")
+        .scrollIntoView({ behavior: "smooth" });
+
+      renderProducts(results);
+
+    }
+
+
+    function clearFilter() {
+      renderProducts(products);
+    }
+
+
+    function focusSearch() {
+
+      document
+        .getElementById("searchInput")
+        .focus();
+
+      window.scrollTo({
+        top: 400,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    function toggleWishlist(name) {
+
+      if (wishlist.includes(name)) {
+
+        wishlist =
+          wishlist.filter(item => item !== name);
+
+        showToast("Removed from wishlist");
+
+      } else {
+
+        wishlist.push(name);
+
+        showToast("Added to wishlist ♥");
+
+      }
+
+      renderProducts();
+
+    }
+
+
+    function showWishlist() {
+
+      if (!wishlist.length) {
+
+        showToast("Your wishlist is empty");
+
+      } else {
+
+        showToast(
+          wishlist.length +
+          " item" +
+          (wishlist.length > 1 ? "s" : "") +
+          " in your wishlist ♥"
+        );
+
+      }
+
+    }
+
+
+    function addCompare(name) {
+
+      if (!comparison.includes(name)) {
+
+        comparison.push(name);
+
+        if (comparison.length > 4) {
+          comparison.shift();
+        }
+
+        showToast(
+          name +
+          " added to comparison"
+        );
+
+      } else {
+
+        showToast("Already added to comparison");
+
+      }
+
+    }
+
+
+    function visitRetailer(retailer) {
+
+      showToast(
+        "Retailer link will be connected here: " +
+        retailer
+      );
+
+    }
+
+
+    function openMatch() {
+
+      currentStep = 1;
+
+      document
+        .getElementById("matchModal")
+        .classList.add("show");
+
+      updateSteps();
+
+    }
+
+
+    function closeMatch() {
+
+      document
+        .getElementById("matchModal")
+        .classList.remove("show");
+
+    }
+
+
+    function selectOption(button) {
+
+      const parent =
+        button.parentElement;
+
+      parent
+        .querySelectorAll(".option")
+        .forEach(option =>
+          option.classList.remove("selected")
+        );
+
+      button.classList.add("selected");
+
+    }
+
+
+    function updateSteps() {
+
+      document
+        .querySelectorAll(".step")
+        .forEach(step => {
+
+          step.classList.toggle(
+            "active",
+            Number(step.dataset.step) === currentStep
+          );
+
+        });
+
+
+      document.getElementById("prevBtn").style.display =
+        currentStep > 1 ? "block" : "none";
+
+
+      document.getElementById("nextBtn").style.display =
+        currentStep < 5 ? "block" : "none";
+
+    }
+
+
+    function nextStep() {
+
+      if (currentStep < 5) {
+
+        currentStep++;
+
+        updateSteps();
+
+      }
+
+    }
+
+
+    function previousStep() {
+
+      if (currentStep > 1) {
+
+        currentStep--;
+
+        updateSteps();
+
+      }
+
+    }
+
+
+    function showToast(message) {
+
+      const toast =
+        document.getElementById("toast");
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      setTimeout(() => {
+
+        toast.classList.remove("show");
+
+      }, 2500);
+
+    }
+
+
+    renderProducts();
+
+  </script>
+
+</body>
+</html>
