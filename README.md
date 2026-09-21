@@ -1,2 +1,2 @@
-# vylo
-VYLO – Discover. Compare. Choose.
+# qevri
+QEVRI – Discover. Compare. Choose.
